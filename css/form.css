@@ -1,0 +1,30 @@
+/* - - - - - - - - - - - - - - - - - - - - -
+
+ Title : Gravitee Contact Form CSS
+ Author : Sam Zhao
+ URL : http://gravitee.ca
+
+ Last Updated : December 26th, 2011
+
+- - - - - - - - - - - - - - - - - - - - - */
+
+.wufoo .submit {
+	background: url(../img/button-blue-sprite.png) left bottom no-repeat;
+	border: 0;
+	width: 110px;
+	height: 40px;
+	cursor: pointer;
+	overflow: visible;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	text-align: center;
+	color: white;
+	padding: 0;
+}
+
+.wufoo .submit:active {
+	background: url(../img/button-blue-sprite.png) left top no-repeat;
+}
+
+.wufoo a {
+	display: none;
+}

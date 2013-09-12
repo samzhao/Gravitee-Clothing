@@ -1,0 +1,193 @@
+<!doctype html>
+<!--[if lt IE 9]><html class="ie"><![endif]--><!--[if gte IE 9]><!--><html><!--<![endif]-->
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+		<title>Colorful Slider</title>
+		
+		<meta name="description" content="Test of colorful slider" />
+		<meta name="viewport" content="width=device-width, initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no"/>
+		
+		<link rel="stylesheet" href="css/base.css" media="all">
+		<link rel="stylesheet" href="css/720_grid.css" media="screen and (min-width: 720px)">
+		<link rel="stylesheet" href="css/986_grid.css" media="screen and (min-width: 986px)">
+		<link rel="stylesheet" href="css/1236_grid.css" media="screen and (min-width: 1236px)">
+		<link rel="stylesheet" href="css/flexslider.css">
+		<link rel="stylesheet" href="css/apprise.min.css">
+		<link rel="stylesheet" href="css/style.css">
+
+		<!-- JavaScript -->
+		<!--[if IE]><![endif]-->
+		<!--[if lt IE 9]>
+		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+		<script src="js/respond.min.js"></script>
+		<script src="js/iscroll.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/easing.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/modernizr.js"></script>
+		<script src="js/jquery.flexslider-min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/apprise-1.5.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(function(){
+				if($(window).width() <= 720) {
+					loadFooter();
+				};
+
+				$(window).resize(function(){
+					if($(window).width() <= 720) {
+						loadFooter();
+					};
+				});
+
+				$('#container').fadeIn(function(){
+					$('#header').animate(
+						{top: 0}, {duration: 500, easing: "easeOutCubic", complete: function(){
+								loadContents();
+							}
+					});
+					if(navigator.platform == 'iPad' || navigator.platform == 'iPhone' || navigator.platform == 'iPod')
+				{
+				     $('#footer').css({"position" : "static"});
+				} else {
+					$('#footer').animate({bottom: -20}, {duration: 500, easing: "easeOutCubic"});
+				};
+				});
+
+				function loadFooter(){
+					$('#contents').ready(function(){
+				     	$('#footer').delay(1000).fadeIn();
+					});	
+				};
+
+				$('#searchInput').attr("value", "Search...");
+
+				$('#searchInput').focus(function(){
+					if($(this).attr("value") == "Search...") $(this).attr("value", "");
+				});
+
+				$('#searchInput').blur(function(){
+					if($(this).attr("value") == "") $(this).attr("value", "Search...");
+				});
+
+				if(!Modernizr.csstransitions) {
+					$('#searchInput').css({"width" : 120});
+					$('#searchInput').focus(function(){
+						if($(this).css({"width" : 120})) $(this).animate({width: 180});
+					});
+
+					$('#searchInput').blur(function(){
+						if($(this).css({"width" : 180})) $(this).animate({width: 120});
+					});
+				};
+
+				if(!($.browser.msie && navigator.userAgent.indexOf('Trident')!==-1) && !($.browser.msie && $.browser.version.substr(0,1) == 6) && !($.browser.msie && $.browser.version.substr(0,1) == 7)){
+					$('#logo a').css({"opacity" : 0}).hover(function(){ 
+					$(this).stop().animate({"opacity" : 1}, 500);
+
+					}, function(){
+
+					$(this).stop().animate({"opacity" : 0}, 500);
+					});
+				};
+
+				if(!Modernizr.multiplebgs) {
+					$('#footer').removeClass('doubleImage').addClass('singleImage');
+				};
+
+				$('.flexslider').flexslider({
+					slideshow: true,
+					slideshowSpeed: 3600,
+					controlNav: true,
+					directNav: true,
+					controlsContainer: ".flex-container"
+				});
+			});
+		</script>
+	</head>
+	<body lang="en">
+		<div id="container" class="grid">
+			<div id="header">
+				<div id="header-inner" class="grid">
+					<div id="logo-wrapper" class="slot-0-1">
+					<div id="logo">
+						<a href="index.html" title="Gravitee"><h1>Gravitee</h1></a>
+					</div><!-- /logo -->
+					</div><!-- /logo-wrapper -->
+					
+					<div id="nav-wrapper">
+						<div id="nav" class="slot-2-3-4">
+							<ul>
+								<a href="#/home" title="Home"><li>Home</li></a>
+								<a href="#/products" title="Products" class="active"><li>Products</li></a>
+								<a href="#/about" title="About"><li>About</li></a>
+								<a href="#/contact" title="Contact Us" class="nav-narrowhide"><li>Contact Us</li></a>
+							</ul>
+						</div><!-- /nav -->
+					</div><!-- /nav-wrapper -->
+						
+					<div id="search-wrapper" class="slot-5">
+						<form method="get" action="/search" id="search">
+							<label for="searchInput">Search</label>
+							<input name="q" type="search" id="searchInput" value="" data-corner="all 12px" />
+							<span class="reset"></span>
+						</form>
+						<div id="searchIcon">
+							<div class="searchOn"></div>
+							<div class="searchOff"></div>
+						</div><!-- /searchIcon -->
+					</div><!-- /search-wrapper -->
+
+					<div class="clear"></div><!-- / -->
+				</div><!-- /header-inner -->
+				<div id="header-bottom-light-border"><div class="grid"></div></div>
+			</div><!-- /header -->
+
+			<div id="contents">
+				<div class="feature" style="color: white; text-align: center">
+					<h2>404 Error!</h2><br>
+					<img src="img/error.png" alt="404 Error">
+					<p>Oops... something went terribly wrong... we are trying to fix this!</p>
+				</div>
+			</div><!-- /contents -->
+
+			<script type="text/javascript" charset="utf-8">
+				var contentCentered = false;
+
+				$(window).bind("resize", centerContent);
+				function centerContent() {
+					if (contentCentered) { 
+						var contentMargin = (($(window).height()-$('#contents').height()+20)/2);
+					}
+				}
+				function loadContents() {
+					contentCentered = true;
+					centerContent();
+					$('#contents').fadeIn();
+				}
+			</script>
+
+			<div id="footer" class="doubleImage">
+				<div id="footer-info" class="grid">
+					<div id="info1" class="slot-0-1">
+						<p><a href="mailto:info@gravitee.ca?subject=feedback">info@gravitee.ca</a></p>
+					</div><!-- /info1 -->
+
+					<div id="info2" class="slot-2-3">
+						middle
+					</div><!-- /info2 -->
+
+					<div id="info3" class="slot-4-5">
+						right
+					</div><!-- /info3 -->
+
+					<div id="info-narrow">
+						narrow footer
+					</div><!-- /info-narrow -->
+				</div><!-- /footer-info -->
+			</div><!-- /footer -->
+		</div><!-- /container -->
+	</body>
+</html>

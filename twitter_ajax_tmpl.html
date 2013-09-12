@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<title>sdf</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.tmpl.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<h1>Tweets about Nettuts+</h1>
+	<script id="tweets" type="text/x-jquery-tmpl">
+		<li>
+			<img src="${imgSource}" alt="${username}">
+			<h2> ${username} </h2>
+			<p> ${tweet} </p>
+			{{if geo}}
+			<span> ${geo} </span>
+			{{/if}}
+		</li>
+	</script>
+	<ul id="twitter"></ul>
+	
+	<script>
+		$.ajax({
+			type : 'GET',
+			dataType : 'jsonp',
+			url : 'http://search.twitter.com/search.json?q=nettuts',
+			success : function(tweets) {
+				console.log(tweets);
+				var twitter = [];
+
+				$.each(tweets.results, function(index, obj) {
+					twitter.push({
+						username : obj.from_user,
+						tweet : obj.text,
+						imgSource : obj.profile_image_url,
+						geo : obj.geo
+					});
+				});
+				$('#tweets').tmpl(twitter).appendTo('#twitter');
+
+			}
+		});
+	</script>
+
+		<h2>Latest Biebster Tweets</h2>
+	<ul id="tweets"><ul>
+
+	<script>
+
+		(function() {
+			var UpdatePanel = {
+				init : function(options) {
+					this.options = $.extend({
+						interval : 5000,
+						number : 3,
+						hijackTweet : false
+					}, options);
+
+					this.updater();
+				},
+
+				updater : function() {
+					(function updateBox() {
+						this.timer = setTimeout(function() {
+							updateIt();
+							updateBox();
+						}, UpdatePanel.options.interval);
+					})();
+
+					updateIt();
+
+					function updateIt() {
+						$.ajax({
+							type : 'GET',
+							url : UpdatePanel.options.url,
+							dataType : 'jsonp',
+
+							error : function() {},
+
+							success : function(results) {
+								var theTweets = '',
+								elem = UpdatePanel.options.elem.empty();
+
+								$.each(results.results, function(index, tweet) {
+									if( UpdatePanel.options.hijackTweet) {
+										tweet.text = tweet.text.replace(/(Justin )?Bieber/ig, 'Nettuts');
+									}
+
+									if( index === UpdatePanel.options.number) {
+										return false;
+									}
+									else {
+										theTweets += '<li>' + tweet.text + '</li>';
+									}
+								});
+								elem.append(theTweets);
+							}
+						});
+					}
+				},
+
+				clearUpdater : function() {
+					clearTimeout(this.timer);
+				}
+			};
+			window.UpdatePanel = UpdatePanel;
+		})();
+
+		UpdatePanel.init({
+			interval : 5000,
+			number : 3,
+			url : "http://search.twitter.com/search.json?q=Michael Jordan",
+			elem : $('#tweets'),
+			hijackTweet : true
+		});
+
+	</script>
+</body>
+</html>
